@@ -9,10 +9,11 @@ import patmat.Huffman._
 
 @RunWith(classOf[JUnitRunner])
 class HuffmanSuite extends FunSuite {
-	trait TestTrees {
-		val t1 = Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5)
-		val t2 = Fork(Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5), Leaf('d',4), List('a','b','d'), 9)
-	}
+  trait TestTrees {
+    val t1 = Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5)
+    val t2 = Fork(Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5), Leaf('d',4), List('a','b','d'), 9)
+    val listChars = List('a', 'b', 'a', 'b', 'a')
+  }
 
 
   test("weight of a larger tree") {
@@ -33,6 +34,11 @@ class HuffmanSuite extends FunSuite {
     assert(string2Chars("hello, world") === List('h', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd'))
   }
 
+  test("times for list of chars") {
+    new TestTrees {
+      assert(times(listChars) === List(('a', 3), ('b', 2)) || times(listChars) === List(('b', 2), ('a', 3)))
+    }
+  }
 
   test("makeOrderedLeafList for some frequency table") {
     assert(makeOrderedLeafList(List(('t', 2), ('e', 1), ('x', 3))) === List(Leaf('e',1), Leaf('t',2), Leaf('x',3)))

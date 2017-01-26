@@ -75,7 +75,18 @@ object Huffman {
    *       println("integer is  : "+ theInt)
    *   }
    */
-  def times(chars: List[Char]): List[(Char, Int)] = ???
+  def times(chars: List[Char]): List[(Char, Int)] = {
+    def timesAcc(charsAcc: List[Char], listPairs: List[(Char, Int)]): List[(Char, Int)] = {
+      if(charsAcc.isEmpty) {
+        listPairs
+      }
+      else {
+        val list = charsAcc.filter(x => x == charsAcc.head)
+        timesAcc(charsAcc.diff(list), listPairs ::: List((charsAcc.head, list.length)))
+      }
+    }
+    timesAcc(chars, Nil)
+  }
 
   /**
    * Returns a list of `Leaf` nodes for a given frequency table `freqs`.
@@ -103,7 +114,7 @@ object Huffman {
    * If `trees` is a list of less than two elements, that list should be returned
    * unchanged.
    */
-    def combine(trees: List[CodeTree]): List[CodeTree] = ???
+  def combine(trees: List[CodeTree]): List[CodeTree] = ???
 
   /**
    * This function will be called in the following way:
