@@ -133,11 +133,10 @@ object Huffman {
    * unchanged.
    */
   def combine(trees: List[CodeTree]): List[CodeTree] = {
-    if(trees.length < 2){
-      trees
-    }
-    else{
-      List(makeCodeTree(trees.head, trees.tail.head)) ::: trees.diff(trees.take(2))
+    trees match {
+      case List(Leaf(_, _)) => trees
+      case List(Fork(_, _, _, _)) => trees
+      case _ => List(makeCodeTree(trees.head, trees.tail.head)) ::: trees.tail.tail
     }
   }
 
