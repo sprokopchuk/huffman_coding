@@ -57,7 +57,7 @@ class HuffmanSuite extends FunSuite {
 
   test("decode text") {
     val text = "texttext"
-    val tree =  Fork(Fork(Leaf('e', 3), Leaf('x', 3), List('e', 'x'),6), Leaf('t', 6), List('e', 'x', 't'), 12)
+    val tree = Fork(Fork(Leaf('e',2),Leaf('x',2),List('e', 'x'),4),Leaf('t',4),List('e', 'x', 't'),8)
     assert(decode(tree, List(1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1)) === text.toList)
   }
 
