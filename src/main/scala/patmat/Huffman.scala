@@ -114,8 +114,7 @@ object Huffman {
    */
   def singleton(trees: List[CodeTree]): Boolean = {
     trees match {
-      case List(Leaf(_, _)) => true
-      case List(Fork(_, _, _, _)) => true
+      case List(x) => true
       case _ => false
     }
   }
@@ -134,9 +133,8 @@ object Huffman {
    */
   def combine(trees: List[CodeTree]): List[CodeTree] = {
     trees match {
-      case List(Leaf(_, _)) => trees
-      case List(Fork(_, _, _, _)) => trees
-      case _ => List(makeCodeTree(trees.head, trees.tail.head)) ::: trees.tail.tail
+      case List(x) => trees
+      case y::ys => List(makeCodeTree(y, ys.head)) ::: ys.tail
     }
   }
 
