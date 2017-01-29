@@ -76,16 +76,16 @@ object Huffman {
    *   }
    */
   def times(chars: List[Char]): List[(Char, Int)] = {
-    def timesAcc(charsAcc: List[Char], listPairs: List[(Char, Int)]): List[(Char, Int)] = {
-      if(charsAcc.isEmpty) {
-        listPairs
-      }
-      else {
-        val list = charsAcc.filter(x => x == charsAcc.head)
-        timesAcc(charsAcc.diff(list), listPairs ::: List((charsAcc.head, list.length)))
+    def timesAcc(x: Char, xs: List[(Char, Int)]): List[(Char, Int)] = {
+      xs match {
+        case Nil => List((x, 1))
+        case z::zs => if(z._1 == x) (x, z._2 + 1)::zs else z::timesAcc(x, zs)
       }
     }
-    timesAcc(chars, Nil)
+    chars match {
+      case Nil => Nil
+      case y::ys  => timesAcc(y, times(ys))
+    }
   }
 
   /**
