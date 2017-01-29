@@ -138,8 +138,9 @@ object Huffman {
    */
   def combine(trees: List[CodeTree]): List[CodeTree] = {
     trees match {
+      case Nil => Nil
       case List(x) => trees
-      case y::ys => List(makeCodeTree(y, ys.head)) ::: ys.tail
+      case y::ys => makeCodeTree(y, ys.head) :: ys.tail
     }
   }
 
