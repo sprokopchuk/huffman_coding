@@ -96,17 +96,22 @@ object Huffman {
    * of a leaf is the frequency of the character.
    */
   def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = {
-    val freqsSorted = freqs.sortWith((left, right) => left._2 < right._2)
-    def makeOrderedLeafListAcc(freqsList: List[(Char, Int)], listLeaves: List[Leaf]): List[Leaf] = {
-      if(freqsList.isEmpty){
-        listLeaves
-      }
-      else {
-        val pair = freqsList.head
-        makeOrderedLeafListAcc(freqsList.tail, listLeaves ::: List(Leaf(pair._1, pair._2)))
+    def insertInOrderedList(elem: (Char, Int), leafList: List[Leaf]): List[Leaf] = {
+      leafList match {
+        case Nil => List(Leaf(elem._1, elem._2))
+        case y::ys => {
+          y match {
+            case Leaf(char, weight) => {
+              if(weight > elem._2) Leaf(elem._1, elem._2)::y::ys else y::insertInOrderedList(elem, ys)
+            }
+          }
+        }
       }
     }
-    makeOrderedLeafListAcc(freqsSorted, Nil)
+    freqs match {
+      case Nil => Nil
+      case x::xs => insertInOrderedList(x, makeOrderedLeafList(xs))
+    }
   }
 
   /**
