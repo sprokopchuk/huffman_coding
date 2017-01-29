@@ -185,18 +185,16 @@ object Huffman {
    * the resulting list of characters.
    */
     def decode(tree: CodeTree, bits: List[Bit]): List[Char] = {
-      def decodeAcc(treeAcc: CodeTree, bitsList: List[Bit], charsList: List[Char]): List[Char] = {
+      def decodeAcc(treeAcc: CodeTree, bitsList: List[Bit]): List[Char] = {
         treeAcc match {
-          case Leaf(char, weight) => {
-            if(bitsList.isEmpty) charsList ::: List(char) else decodeAcc(tree, bitsList, charsList ::: List(char))
-          }
+          case Leaf(char, _) => if(bitsList.isEmpty) List(char) else char::decodeAcc(tree, bitsList)
           case Fork(left, right, _, _) => {
-            val head = bitsList.head
-            if(head == 1) decodeAcc(right, bitsList.tail, charsList) else decodeAcc(left, bitsList.tail, charsList)
+            if(bitsList.head == 0) decodeAcc(left, bitsList.tail)
+            else decodeAcc(right, bitsList.tail)
           }
         }
       }
-      decodeAcc(tree, bits, Nil)
+      decodeAcc(tree, bits)
     }
 
   /**
